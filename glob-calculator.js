@@ -34,32 +34,51 @@ const simpleRomanConversion = {
 }
 
 function makeGlobDictionary(inputArray) {
-	console.log(inputArray);
+	let simpleGlobConversion = {};
+
 	// for ... of loop Iterating over iterable objects
 	for (let inputLine of inputArray) {
-		let targetRoman = inputLine.charAt(inputLine.length - 1); // get the last character
-		
-		// regex way 
-		// const firstWord = RegExp('\\w+\\s'); // gets the space as well; want to exclude that 
-		// let targetName = inputLine.match(firstWord);
+		let targetRoman = inputLine.charAt(inputLine.length - 1); // get the last character -> I
+		let targetName = inputLine.split(' ')[0]; // split by space; get the first in array -> glob
 
-		let targetName = inputLine.split(' ')[0]; // split by space; get the first in array 
-		console.log(targetName);
-
-		let targetNumeral = inputLine.charAt()
-		
+		// now replace the dictionary 
+		if (targetRoman in simpleRomanConversion) {
+			let numeralValue = simpleRomanConversion[targetRoman];
+			simpleGlobConversion[targetName] = numeralValue;
+		}
 	}
+	return simpleGlobConversion;
+}
+
+function findOtherVariables(otherVariablesInputArray) {
+	for (otherVariablesInput of otherVariablesInputArray) {
+		console.log(otherVariablesInput);
+		// how many Credits is glob prok Silver ?
+		let splitOtherInput = otherVariablesInput.split(' ');
+		let targetValue = splitOtherInput.slice(-2, -1).toString(); // get second to last element in the array -> 34
+		let targetVariable = splitOtherInput.slice(2,3).toString(); // get the second element in the arr -> 'Iron'
+		
+		// this one will just return variables for now 
+		let 
+	}
+
+	return [7, 9, 10]; // silver, gold, iron 
 }
 
 function globController() {
 	const inputArray = parseInput(input);
 
 	// non-destructive array return (end not included) 
+	// refactoring: could loop through the finding of these 
 	const dictionaryInputArray = inputArray.slice(0, 4); // [ 'glob is I', 'prok is V', 'pish is X', 'tegj is L' ]
 
-	const globToNumeralDictionary = makeGlobDictionary(dictionaryInputArray);
+	const globToNumeralDictionary = makeGlobDictionary(dictionaryInputArray); // { glob: 1, prok: 5, pish: 10, tegj: 50 }
 
-	return globToNumeralDictionary;
+	const otherVariablesInputArray = inputArray.slice(4, 7);
+	const [silver, gold, iron] = findOtherVariables(otherVariablesInputArray);
+
+	// could assign those new variables into the dictionary in addition 
+	console.log(gold);
 };
 
 console.log(globController());
