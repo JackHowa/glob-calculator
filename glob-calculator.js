@@ -37,7 +37,16 @@ function makeGlobDictionary(inputArray) {
 	console.log(inputArray);
 	// for ... of loop Iterating over iterable objects
 	for (let inputLine of inputArray) {
-		let targetRoman = inputLine.charAt(inputLine.length - 1);
+		let targetRoman = inputLine.charAt(inputLine.length - 1); // get the last character
+		
+		// regex way 
+		// const firstWord = RegExp('\\w+\\s'); // gets the space as well; want to exclude that 
+		// let targetName = inputLine.match(firstWord);
+
+		let targetName = inputLine.split(' ')[0]; // split by space; get the first in array 
+		console.log(targetName);
+
+		let targetNumeral = inputLine.charAt()
 		
 	}
 }
