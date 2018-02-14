@@ -33,7 +33,52 @@ const simpleRomanConversion = {
 	L: 50
 }
 
+const complexRomanConversion = {
+	40: ["X","L"],
+	30: ["X","X", "L"],
+	9: ["I", "X"],
+	8: ["I", "I", "X"], 
+	4: ["I", "V"],
+	3: ["I", "I", "V"],
+};
+
+// number is the 1 
+// numeral is the character like I or glob 
+function calibrateComplexConversion() {
+	for (simpleGlobConversionNumeral in simpleGlobConversion) {
+		// simpleGlobConversionNumeral -> glob 
+		let simpleGlobConversionNumber = simpleGlobConversion[simpleGlobConversionNumeral]; // 1 
+
+		for (complexRomanConversionNumber in complexRomanConversion) {
+			// complexRomanConversionNumber -> 3 
+
+			let complexRomanConversionNumeralArray = complexRomanConversion[complexRomanConversionNumber]; 
+			// complexRomanConversionNumeralArray -> [ 'I', 'I', 'V' ]
+			
+			let complexGlobConversionNumeralArray = [];
+
+			// want each element of the array 
+			for (complexRomanConversionNumeral of complexRomanConversionNumeralArray) {
+
+				// complexRomanConversionNumeral -> 'I' 
+				let complexRomanConversionNumeralNumber = simpleRomanConversion[complexRomanConversionNumeral]; // 1 
+
+				if (simpleGlobConversionNumber == complexRomanConversionNumeralNumber) {
+					complexGlobConversionNumeralArray.push(simpleGlobConversionNumeral); // -> ['glob']
+				}
+			}
+				console.log(complexGlobConversionNumeralArray);
+				// complexGlobConversionNumeralArray -> ['glob', 'glob', 'prok']
+				complexGlobConversionNumeralString = complexGlobConversionNumeralArray.join(' '); // 'glob glob prok'
+				complexGlobConversion[complexGlobConversionNumeralString] = complexRomanConversionNumber; // -> {'glob glob prok': 3}
+		}
+	}
+	console.log(complexGlobConversion);
+}
+
 let simpleGlobConversion = {};
+
+let complexGlobConversion = {};
 
 function makeGlobDictionary(inputArray) {
 
@@ -112,15 +157,17 @@ function globController() {
 	// refactoring: could loop through the finding of these 
 	const dictionaryInputArray = inputArray.slice(0, 4); // [ 'glob is I', 'prok is V', 'pish is X', 'tegj is L' ]
 
-	const globToNumeralDictionary = makeGlobDictionary(dictionaryInputArray); // { glob: 1, prok: 5, pish: 10, tegj: 50 }
+	makeGlobDictionary(dictionaryInputArray); // { glob: 1, prok: 5, pish: 10, tegj: 50 }
 
-	const otherVariablesInputArray = inputArray.slice(4, 7);
-	findOtherVariables(otherVariablesInputArray); // update the glob dictionary with new names 
+	calibrateComplexConversion();
 
-	// how much is pish tegj glob glob ?
-	const questionValues = inputArray[7].split(' ');
-	let totalValueOfQuestion = findTotalValue(questionValues);
-	console.log(totalValueOfQuestion);
+	// const otherVariablesInputArray = inputArray.slice(4, 7);
+	// findOtherVariables(otherVariablesInputArray); // update the glob dictionary with new names 
+
+	// // how much is pish tegj glob glob ?
+	// const questionValues = inputArray[7].split(' ');
+	// let totalValueOfQuestion = findTotalValue(questionValues);
+	// console.log(totalValueOfQuestion);
 };
 
-console.log(globController());
+globController();
