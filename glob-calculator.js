@@ -33,8 +33,9 @@ const simpleRomanConversion = {
 	L: 50
 }
 
+let simpleGlobConversion = {};
+
 function makeGlobDictionary(inputArray) {
-	let simpleGlobConversion = {};
 
 	// for ... of loop Iterating over iterable objects
 	for (let inputLine of inputArray) {
@@ -52,18 +53,57 @@ function makeGlobDictionary(inputArray) {
 
 function findOtherVariables(otherVariablesInputArray) {
 	for (otherVariablesInput of otherVariablesInputArray) {
-		console.log(otherVariablesInput);
+
 		// how many Credits is glob prok Silver ?
 		let splitOtherInput = otherVariablesInput.split(' ');
 		let targetValue = splitOtherInput.slice(-2, -1).toString(); // get second to last element in the array -> 34
 		let targetVariable = splitOtherInput.slice(2,3).toString(); // get the second element in the arr -> 'Iron'
-		
-		// this one will just return variables for now 
-		let 
+
+		let knownInputs = splitOtherInput.slice(0,2); // [ 'glob', 'glob' ]
+
+		let totalExcludingUnknown = findTotalValue(knownInputs); // based on known values 
+
+		let otherVariableValue = targetValue - totalExcludingUnknown; // to find difference between known and unknown 
+
+		// can set this in the global glob dictionary 
+		simpleGlobConversion[targetVariable] = otherVariableValue;
 	}
 
-	return [7, 9, 10]; // silver, gold, iron 
+	return simpleGlobConversion; // { glob: 1, prok: 5, pish: 10, tegj: 50, Silver: 32, Gold: 57794, Iron: 3890 }
 }
+
+function findTotalValue(nonArabicNumberInputArray) {
+	// set output for the whole number
+	let output = 0;
+
+	// loop through while condition is true
+	// the input length can't be zero
+	// wouldn't even want to run once using do while if so
+	while (nonArabicNumberInputArray.length > 0) {
+		// use add value for each letter each time num
+		// runs through the while loop
+
+		output += addValue(nonArabicNumberInputArray[0]);
+		console.log(output);
+
+		// removes the first input in the array
+		nonArabicNumberInputArray = nonArabicNumberInputArray.slice(1);
+	} 
+
+	// return output for each array of known values
+	return output;
+}
+
+// one character at a time 
+function addValue(character) {
+	if (simpleGlobConversion.hasOwnProperty(character)) {
+		return simpleGlobConversion[character];
+	} else {
+		// don't want to return null or nothing 
+		return 0;
+	}
+}
+
 
 function globController() {
 	const inputArray = parseInput(input);
@@ -75,10 +115,12 @@ function globController() {
 	const globToNumeralDictionary = makeGlobDictionary(dictionaryInputArray); // { glob: 1, prok: 5, pish: 10, tegj: 50 }
 
 	const otherVariablesInputArray = inputArray.slice(4, 7);
-	const [silver, gold, iron] = findOtherVariables(otherVariablesInputArray);
+	findOtherVariables(otherVariablesInputArray); // update the glob dictionary with new names 
 
-	// could assign those new variables into the dictionary in addition 
-	console.log(gold);
+	// how much is pish tegj glob glob ?
+	const questionValues = inputArray[7].split(' ');
+	let totalValueOfQuestion = findTotalValue(questionValues);
+	console.log(totalValueOfQuestion);
 };
 
 console.log(globController());
