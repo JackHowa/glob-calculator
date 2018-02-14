@@ -62,7 +62,9 @@ function calibrateComplexConversion() {
 
 				// complexRomanConversionNumeral -> 'I' 
 				let complexRomanConversionNumeralNumber = simpleRomanConversion[complexRomanConversionNumeral]; // 1 
-
+				
+				// no not current conversion  
+				// want any value to match with any key 
 				if (simpleGlobConversionNumber == complexRomanConversionNumeralNumber) {
 					complexGlobConversionNumeralArray.push(simpleGlobConversionNumeral); // -> ['glob']
 				}
